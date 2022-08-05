@@ -19,7 +19,7 @@ PEPTIDE_CM=$DATADIR/1ssc_CM.npy
 #NUMBER OF ITERATIONS
 NITER=300 #This will likely have to be modified depending on the outcome of the design
 #Path to singularity - now this is hardcoded assuming the path created from ./src/install_singularity_ubuntu.sh, if you have singularity in your path change this variable
-SINGULARITY=/opt/singularity3/bin/singularity
+SINGULARITY=singularity
 
 #########Step1: Create MSA with HHblits#########
 SINGIMG=$BASE/src/AF2/AF_environment.sif #Sing img
@@ -43,7 +43,7 @@ MODEL_NAME='model_1' #model_1_ptm
 MSAS="$MSA" #Comma separated list of msa paths
 
 #Optimise a binder
-$SINGULARITY exec --nv --bind $BASE:$BASE $SINGIMG \
+$SINGULARITY exec --nv --bind $BASE:$BASE --env PYTHONPATH=$PARAM $SINGIMG \
 python3 $BASE/src/mc_design.py \
 		--receptor_fasta_path=$RECEPTORFASTA \
 		--receptor_if_residues=$RECEPTORIFRES \
